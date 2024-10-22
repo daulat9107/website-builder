@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] {
+    display: none;
+}
+/* textColor: "#e4dcf1",
+backgroundColor: "#0f0916",
+accentColor: "#b7b350",
+primaryColor: "#b094d3",
+secondaryColor: "#72462f",
+successColor: "#047857",
+dangerColor: "#b91c1c",
+warningColor: "#a16207",
+infoColor: "#15803d", */
+@layer base {
+    :root {
+        default: "#e4dcf1";
+        --text-50: #f1f1f4;
+        --text-100: #e2e2e9;
+        --text-200: #c6c6d2;
+        --text-300: #a9a9bc;
+        --text-400: #8d8da5;
+        --text-500: #70708f;
+        --text-600: #5a5a72;
+        --text-700: #434356;
+        --text-800: #2d2d39;
+        --text-900: #16161d;
+        --text-950: #0b0b0e;
+
+        --background-default: "blue";
+        --background-50: #f1f1f4;
+        --background-100: #e2e2e9;
+        --background-200: #c6c6d2;
+        --background-300: #a9a9bc;
+        --background-400: #8d8da5;
+        --background-500: #70708f;
+        --background-600: #5a5a72;
+        --background-700: #434356;
+        --background-800: #2d2d39;
+        --background-900: #16161d;
+        --background-950: #0b0b0e;
+
+        --primary-default: "#b094d3";
+        --primary-50: #f1f0f4;
+        --primary-100: #e2e2e9;
+        --primary-200: #c6c5d3;
+        --primary-300: #a9a8bd;
+        --primary-400: #8c8ba7;
+        --primary-500: #6f6e91;
+        --primary-600: #595874;
+        --primary-700: #434257;
+        --primary-800: #2d2c3a;
+        --primary-900: #16161d;
+        --primary-950: #0b0b0f;
+
+        --secondary-default: "#72462f";
+        --secondary-50: #f4f1f1;
+        --secondary-100: #e9e2e3;
+        --secondary-200: #d3c5c6;
+        --secondary-300: #bca9aa;
+        --secondary-400: #a68c8e;
+        --secondary-500: #906f72;
+        --secondary-600: #73595b;
+        --secondary-700: #564344;
+        --secondary-800: #3a2c2d;
+        --secondary-900: #1d1617;
+        --secondary-950: #0e0b0b;
+
+        --accent-default: "#b7b350";
+        --accent-50: #f4f2f1;
+        --accent-100: #e9e5e2;
+        --accent-200: #d3ccc5;
+        --accent-300: #bcb2a9;
+        --accent-400: #a6988c;
+        --accent-500: #907e6f;
+        --accent-600: #736559;
+        --accent-700: #564c43;
+        --accent-800: #3a332c;
+        --accent-900: #1d1916;
+        --accent-950: #0e0d0b;
+
+        --success-default: "#047857";
+        --success-50: #ecfdf5;
+        --success-100: #d1fae5;
+        --success-200: #a7f3d0;
+        --success-300: #6ee7b7;
+        --success-400: #34d399;
+        --success-500: #10b981;
+        --success-600: #059669;
+        --success-700: #047857;
+        --success-800: #065f46;
+        --success-900: #064e3b;
+        --success-950: #022c22;
+
+        --danger-default: "#b91c1c";
+        --danger-50: #fef2f2;
+        --danger-100: #fee2e2;
+        --danger-200: #fecaca;
+        --danger-300: #fca5a5;
+        --danger-400: #f87171;
+        --danger-500: #ef4444;
+        --danger-600: #dc2626;
+        --danger-700: #b91c1c;
+        --danger-800: #991b1b;
+        --danger-900: #7f1d1d;
+        --danger-950: #450a0a;
+
+        --warning-default: "#a16207";
+        --warning-50: #fefce8;
+        --warning-100: #fef9c3;
+        --warning-200: #fef08a;
+        --warning-300: #fde047;
+        --warning-400: #facc15;
+        --warning-500: #eab308;
+        --warning-600: #ca8a04;
+        --warning-700: #a16207;
+        --warning-800: #854d0e;
+        --warning-900: #713f12;
+        --warning-950: #422006;
+
+        --info-default: "#15803d";
+        --info-50: #f0fdf4;
+        --info-100: #dcfce7;
+        --info-200: #bbf7d0;
+        --info-300: #86efac;
+        --info-400: #4ade80;
+        --info-500: #22c55e;
+        --info-600: #16a34a;
+        --info-700: #15803d;
+        --info-800: #166534;
+        --info-900: #14532d;
+        --info-950: #052e16;
+    }
+}
+
+@layer components {
+    .app-section {
+        @apply p-4 rounded shadow bg-background-900 h-max;
+    }
+    .app-title {
+        @apply text-text-100 pb-4 text-xl;
+    }
+    .app-divider {
+        @apply mt-4 mb-4 border-2 border-background-700;
+    }
+    .app-popover {
+        @apply absolute shadow p-4 rounded z-50 rounded-r-none text-text-50 bg-background-900 m-4 w-96 h-96;
+    }
+    .app-popover-triangle {
+        @apply absolute shadow w-0 h-0 border-[20px] border-x-[10px] border-transparent border-b-background-900 border-t-0;
+    }
+    .app-search-options {
+        @apply flex text-text text-lg items-center justify-evenly rounded-full shadow w-1/2 bg-background h-12;
+    }
+}
