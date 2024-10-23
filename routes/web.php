@@ -1,25 +1,28 @@
 <?php
 
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
-use App\Http\Controllers\DataTable\PurchaserController;
-use App\Http\Controllers\DataTable\SupplierController;
-use App\Http\Controllers\DataTable\TransportController;
-use App\Http\Controllers\DataTable\ProductController;
-use App\Http\Controllers\DataTable\AddressController;
-use App\Http\Controllers\DataTable\FirmController;
-use App\Http\Controllers\DataTable\AgencyController;
-use App\Http\Controllers\DataTable\GroupController;
-use App\Http\Controllers\DataTable\AccountController;
-use App\Http\Controllers\DataTable\PageController;
-use App\Http\Controllers\DataTable\OrdersController;
-use App\Http\Controllers\DataTable\TrackOrdersStatusController;
-use App\Http\Controllers\DataTable\OrderProductsController;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ThemeShowController;
+use App\Http\Controllers\StoreThemeController;
 use App\Http\Controllers\TradingPlanController;
+use App\Http\Controllers\DataTable\FirmController;
+use App\Http\Controllers\DataTable\PageController;
+use App\Http\Controllers\DataTable\PostController;
+use App\Http\Controllers\DataTable\GroupController;
+use App\Http\Controllers\DataTable\AgencyController;
+use App\Http\Controllers\DataTable\OrdersController;
+use App\Http\Controllers\DataTable\AccountController;
+use App\Http\Controllers\DataTable\AddressController;
+use App\Http\Controllers\DataTable\ProductController;
+use App\Http\Controllers\DataTable\SupplierController;
+use App\Http\Controllers\DataTable\PurchaserController;
+use App\Http\Controllers\DataTable\TransportController;
+use App\Http\Controllers\DataTable\OrderProductsController;
+use App\Http\Controllers\DataTable\TrackOrdersStatusController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -304,5 +307,24 @@ Route::middleware([
 ])->group(function () {
     Route::get('/invoice', [InvoiceController::class,'create'])->name('invoice');
 });
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->resource('datatable/posts', PostController::class);
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/posts', function (Request $request) {
+        return Inertia::render('Posts');
+    })->name('posts');
+});
+
+Route::post('/theme', StoreThemeController::class)->middleware('auth:sanctum');
+Route::get('/theme', ThemeShowController::class)->middleware('auth:sanctum');
+
 
 Route::get('/trading', [TradingPlanController::class,'index'])->name('trading');

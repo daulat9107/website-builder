@@ -17,4 +17,7 @@ export default {
             resolve(this.get(key));
         });
     },
+    remove(key) {
+        localStorage.removeItem(key);
+    },
 };

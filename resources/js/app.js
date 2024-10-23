@@ -32,6 +32,8 @@ storage
         console.log(error);
     });
 
+store.dispatch("theme/theme");
+
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) =>

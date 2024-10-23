@@ -136,6 +136,11 @@ export default [
                 },
             ],
         },
+        {
+            to: route("posts"),
+            label: "Posts",
+            icon: mdiSquareEditOutline,
+        },
         // {
         //   to: '/register',
         //   label: 'Register',

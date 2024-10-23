@@ -31,6 +31,8 @@ import CardComponent from "@/Components/CardComponent.vue";
 import ConfirmationModal from "@/Components/ConfirmationModal.vue";
 import Control from "@/Components/Control.vue";
 import Field from "@/Components/Field.vue";
+import axios from "axios";
+import storage from "@/storage";
 const store = useStore();
 
 const darkMode = computed(() => store.state.darkMode);
@@ -92,6 +94,34 @@ const theme = reactive({
     warning: [],
     info: [],
 });
+const themeLightness = computed(() => {
+    let newTheme = {};
+    for (const [key, value] of Object.entries(theme)) {
+        if (value.length > 0) {
+            newTheme[key] = value.filter((row) => {
+                if (row.code !== "default") {
+                    return row;
+                }
+            });
+        }
+    }
+    return newTheme;
+});
+const colorPalette = computed(() => {
+    let colors = [];
+    for (const [key, value] of Object.entries(theme)) {
+        if (value.length > 0) {
+            colors.push(
+                value.filter((row) => {
+                    if (row.code === "default") {
+                        return row;
+                    }
+                })[0].shade
+            );
+        }
+    }
+    return colors;
+});
 const themeHasValue = ref(false);
 /* form */
 const form = reactive({
@@ -113,19 +143,27 @@ const updateTheme = () => {
                 form[`${colorType}Color`],
                 11
             );
+            theme[colorType].push({
+                code: "default",
+                shade: form[`${colorType}Color`],
+            });
+
             theme[colorType].forEach((color) => {
                 themeStyle.value.setProperty(
                     `--${colorType}-${color.code}`,
                     color.shade
                 );
             });
-
-            themeStyle.value.setProperty(
-                `--${colorType}-default`,
-                form[`${colorType}Color`]
-            );
         }
     }
+
+    axios
+        .post("theme", {
+            theme: theme,
+        })
+        .then((response) => {
+            storage.remove("theme");
+        });
 
     themeHasValue.value = true;
     store.commit(
@@ -142,16 +180,7 @@ const updateTheme = () => {
     );
 };
 onMounted(() => {
-    for (let colorType in theme) {
-        if (theme.hasOwnProperty(colorType)) {
-            themeStyle.value.setProperty(
-                `--${colorType}-default`,
-                form[`${colorType}Color`]
-            );
-        }
-    }
-    store.state.isAsideMobileExpanded = true;
-    store.state.isDemoAsideMenu = true;
+    store.dispatch("asideMobileToggle", false);
 });
 </script>
 
@@ -540,19 +569,36 @@ onMounted(() => {
                         Update Theme
                     </button>
                     <template v-if="themeHasValue">
+                        <label class="block text-text mt-4 font-bold"
+                            >Color Palette</label
+                        >
+                        <div class="flex">
+                            <div
+                                class="p-2 bg-blue-900 w-12 h-12 shadow"
+                                v-for="color in colorPalette"
+                                :style="{
+                                    backgroundColor: color,
+                                }"
+                            ></div>
+                        </div>
                         <div
                             class="text-white"
-                            v-for="(colors, colorType) in theme"
+                            v-for="(colors, colorType) in themeLightness"
                         >
                             <div class="flex flex-col m-4">
                                 <div class="flex">
                                     <div
                                         v-for="color in colors"
+                                        :key="color.code"
                                         class="p-2 bg-blue-900 w-12 h-12 rounded shadow"
                                         :style="{
                                             backgroundColor: color.shade,
                                         }"
-                                    ></div>
+                                    >
+                                        <small class="text-xs">{{
+                                            color.code
+                                        }}</small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
